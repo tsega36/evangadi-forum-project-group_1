@@ -25,14 +25,14 @@
 /* ===== Question Header ===== */
 .header_container {
   margin-bottom: 40px;
-  padding: 40px 30px; 
+  padding: 40px 30px;
   border-radius: 12px;
-  background: linear-gradient(135deg, #06549c, #042150); 
+  background: linear-gradient(135deg, #06549c, #042150);
   color: #ffffff;
   display: flex;
   flex-direction: column;
-  align-items: center; 
-  text-align: center; 
+  align-items: center;
+  text-align: center;
   position: relative;
 }
 
@@ -67,30 +67,30 @@
 }
 
 .title_icon {
-  color: #ffdd57; 
+  color: #ffdd57;
 }
 
 .description {
   margin-top: 10px;
-  color: #d1d5db; 
+  color: #d1d5db;
   font-size: 16px;
   line-height: 1.6;
   font-style: normal;
-  max-width: 700px; 
+  max-width: 700px;
 }
 
 .question_date {
   display: inline-block;
   margin-top: 12px;
   font-size: 13px;
-  color: #cbd5f5; 
+  color: #cbd5f5;
   font-style: italic;
 }
 
 .divider {
   margin-top: 25px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-  width: 60%; 
+  width: 60%;
 }
 
 /* Answers */

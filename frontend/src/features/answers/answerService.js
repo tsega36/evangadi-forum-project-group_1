@@ -1,13 +1,13 @@
-import axiosBase from "../../services/axiosConfig";
+import axiosBase from '../../services/axiosConfig';
 
-export const getAnswers = async (question_id) => {
-  const response = await axiosBase.get(`/answer/getAnswers/${question_id}`);
+export const getAnswers = async (questionId) => {
+  const response = await axiosBase.get(`/answer/getAnswers/${questionId}`);
   return response.data;
 };
 
-export const postAnswer = async (question_id, answerContent) => {
-  const response = await axiosBase.post("/answer/postAnswer", {
-    questionid: question_id,
+export const postAnswer = async (questionId, answerContent) => {
+  const response = await axiosBase.post('/answer/postAnswer', {
+    questionid: questionId,
     answer: answerContent,
   });
   return response.data;
