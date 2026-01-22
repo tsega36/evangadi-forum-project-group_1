@@ -1,6 +1,6 @@
 import { CircleUser } from 'lucide-react';
-import { useEffect, useMemo, useState } from 'react';
-import axios from '../../../api/axios';
+import { useEffect, useState } from 'react';
+import axios from '../../../services/axiosConfig';
 import classes from './AnswerList.module.css';
 
 const PAGE_SIZE = 5;
@@ -12,15 +12,18 @@ const AnswerList = ({ questionId, onAiSummarize, aiSummary, aiLoading }) => {
   const [newAnswer, setNewAnswer] = useState('');
   const [posting, setPosting] = useState(false);
 
-  // pagination state
   const [currentPage, setCurrentPage] = useState(1);
 
+  // Fetch answers
   const fetchAnswers = async () => {
     if (!questionId) return;
     try {
       setLoading(true);
       const res = await axios.get(`/api/answer/${questionId}`);
-      setAnswers(res.data.answers || []);
+      const ansArray = Array.isArray(res.data.answers)
+        ? res.data.answers
+        : Object.values(res.data.answers || {});
+      setAnswers(ansArray);
     } catch (err) {
       console.error(err);
       setError('Failed to load answers');
@@ -33,23 +36,20 @@ const AnswerList = ({ questionId, onAiSummarize, aiSummary, aiLoading }) => {
     fetchAnswers();
   }, [questionId]);
 
-  // reset page when answers change
+  // Reset current page whenever answers change
   useEffect(() => {
     setCurrentPage(1);
-  }, [answers.length]);
+  }, [answers]);
 
-  // pagination calculations
-  const totalPages = Math.max(1, Math.ceil(answers.length / PAGE_SIZE));
-
-  const pagedAnswers = useMemo(() => {
-    const start = (currentPage - 1) * PAGE_SIZE;
-    return answers.slice(start, start + PAGE_SIZE);
-  }, [answers, currentPage]);
+  // Pagination calculations
+  const totalPages = Math.ceil(answers.length / PAGE_SIZE);
+  const start = (currentPage - 1) * PAGE_SIZE;
+  const pagedAnswers = answers.slice(start, start + PAGE_SIZE);
 
   const changePage = (p) =>
     setCurrentPage(Math.min(Math.max(1, p), totalPages));
 
-  // post answer
+  // Post a new answer
   const handlePostAnswer = async (e) => {
     e.preventDefault();
     if (!newAnswer.trim()) return alert('Please type an answer');
@@ -75,7 +75,7 @@ const AnswerList = ({ questionId, onAiSummarize, aiSummary, aiLoading }) => {
 
   return (
     <section className={classes.answersSection}>
-      {/* AI summary */}
+      {/* AI Summarize */}
       <button
         onClick={() => onAiSummarize(answers)}
         className={classes.aiButton}
@@ -91,7 +91,7 @@ const AnswerList = ({ questionId, onAiSummarize, aiSummary, aiLoading }) => {
         </div>
       )}
 
-      {/* answers */}
+      {/* Answer List */}
       <div className={classes.answerList}>
         {pagedAnswers.length === 0 ? (
           <p className={classes.noAnswer}>
@@ -101,7 +101,11 @@ const AnswerList = ({ questionId, onAiSummarize, aiSummary, aiLoading }) => {
           pagedAnswers.map((ans) => (
             <div key={ans.answerid} className={classes.answerCard}>
               <div className={classes.userInfo}>
-                <CircleUser size={36} strokeWidth={1.5} />
+                <CircleUser
+                  size={36}
+                  strokeWidth={1.5}
+                  className={classes.avatar}
+                />
                 <div>
                   <span className={classes.user}>{ans.username}</span>
                   <span className={classes.date}>
@@ -115,7 +119,7 @@ const AnswerList = ({ questionId, onAiSummarize, aiSummary, aiLoading }) => {
         )}
       </div>
 
-      {/* pagination UI */}
+      {/* Pagination */}
       {totalPages > 1 && (
         <div className={classes.pagination}>
           <button
@@ -129,7 +133,9 @@ const AnswerList = ({ questionId, onAiSummarize, aiSummary, aiLoading }) => {
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
             <button
               key={p}
-              className={`${classes.pageBtn} ${p === currentPage ? classes.active : ''}`}
+              className={`${classes.pageBtn} ${
+                p === currentPage ? classes.active : ''
+              }`}
               onClick={() => changePage(p)}
             >
               {p}
@@ -146,7 +152,7 @@ const AnswerList = ({ questionId, onAiSummarize, aiSummary, aiLoading }) => {
         </div>
       )}
 
-      {/* post form */}
+      {/* Post new answer form */}
       <form onSubmit={handlePostAnswer} className={classes.answerForm}>
         <textarea
           rows="5"

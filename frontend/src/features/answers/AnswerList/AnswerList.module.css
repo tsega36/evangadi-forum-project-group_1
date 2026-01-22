@@ -1,56 +1,26 @@
+/* ================= CONTAINER ================= */
 .answersSection {
-  margin-top: 20px;
-}
-
-/* ================= ANSWERS ================= */
-
-.answerList {
-  margin-top: 20px;
-}
-
-.answerCard {
-  padding: 14px 0;
-  border-bottom: 1px solid #ddd;
-}
-
-.userInfo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 6px;
-}
-
-.user {
-  font-weight: 600;
-  display: block;
-}
-
-.date {
-  font-size: 12px;
-  color: #888;
-}
-
-.answerText {
-  font-size: 15px;
-  line-height: 1.6;
-  color: #333;
-}
-
-.noAnswer {
-  font-style: italic;
-  color: #777;
+  margin-top: 40px;
 }
 
 /* ================= AI SUMMARY ================= */
-
 .aiButton {
   margin-bottom: 15px;
-  padding: 8px 14px;
-  border-radius: 8px;
+  padding: 10px 16px;
+  border-radius: 10px;
   border: none;
   cursor: pointer;
-  background: #3b50b6;
+  background: linear-gradient(135deg, #3b50b6, #6c82f1);
   color: white;
+  font-weight: 500;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.aiButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(59, 80, 182, 0.35);
 }
 
 .aiButton:disabled {
@@ -60,9 +30,88 @@
 
 .aiSummaryBox {
   background: #f5f7ff;
-  padding: 14px;
-  border-radius: 10px;
-  margin-bottom: 20px;
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 25px;
+}
+
+/* ================= ANSWER LIST ================= */
+.answerList {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* ================= ANSWER CARD ================= */
+.answerCard {
+  background-color: var(--card-bg, #ffffff);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    background 0.3s ease;
+}
+
+.answerCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(135deg, #f0f4ff, #dbe6ff);
+}
+
+/* ================= USER INFO ================= */
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.userInfo svg {
+  background: #f5f5f5;
+  border-radius: 50%;
+  padding: 6px;
+  transition: all 0.3s ease;
+}
+
+.answerCard:hover .userInfo svg {
+  background: #3b50b6;
+  color: #ffffff;
+  transform: scale(1.2);
+}
+
+.user {
+  font-weight: 600;
+  color: #222;
+  display: block;
+  transition: color 0.3s ease;
+}
+
+.answerCard:hover .user {
+  color: #3b50b6;
+}
+
+.date {
+  font-size: 12px;
+  color: #888;
+}
+
+/* ================= ANSWER TEXT ================= */
+.answerText {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+.answerCard:hover .answerText {
+  color: #222;
+}
+
+.noAnswer {
+  font-style: italic;
+  color: #777;
 }
 
 /* ================= PAGINATION ================= */
@@ -71,76 +120,89 @@
   justify-content: center;
   align-items: center;
   gap: 8px;
-  margin: 20px 0 30px;
+  margin: 25px 0 30px;
 }
 
 .pageBtn {
-  min-width: 40px;
-  height: 40px;
+  min-width: 36px;
+  height: 36px;
   padding: 0 12px;
-  border-radius: 8px;
+  border-radius: 10px;
   border: none;
-  background: #fff;
+  background: #ffffff;
   color: #444;
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
-  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .pageBtn:hover:not(:disabled) {
-  background: #3b50b6;
-  color: #fff;
+  background: linear-gradient(135deg, #3b50b6, #6c82f1);
+  color: #ffffff;
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(59, 80, 182, 0.3);
+  box-shadow: 0 8px 20px rgba(59, 80, 182, 0.35);
 }
 
 .pageBtn.active {
-  background: #3b50b6;
-  color: #fff;
+  background: linear-gradient(135deg, #3b50b6, #6c82f1);
+  color: #ffffff;
   font-weight: 600;
+  box-shadow: 0 10px 25px rgba(59, 80, 182, 0.4);
 }
 
 .pageBtn:disabled {
-  background: #eee;
+  background: #f1f1f1;
   color: #aaa;
   cursor: not-allowed;
   box-shadow: none;
 }
 
-/* Dark mode */
-:global([data-theme='dark']) .pagination .pageBtn {
-  background: #1f1f1f;
-  color: #ccc;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
-}
-
-:global([data-theme='dark']) .pagination .pageBtn:hover:not(:disabled),
-:global([data-theme='dark']) .pagination .pageBtn.active {
-  background: #3b50b6;
-  color: #fff;
-}
-
 /* ================= FORM ================= */
-
 .answerForm {
-  margin-top: 25px;
+  margin-top: 30px;
 }
 
 .answerForm textarea {
   width: 100%;
-  padding: 10px;
-  border-radius: 8px;
+  padding: 12px;
+  border-radius: 10px;
   resize: vertical;
 }
 
 .answerForm button {
   margin-top: 10px;
-  padding: 8px 14px;
-  border-radius: 8px;
+  padding: 10px 16px;
+  border-radius: 10px;
   border: none;
-  background: #3b50b6;
+  background: linear-gradient(135deg, #3b50b6, #6c82f1);
   color: white;
   cursor: pointer;
+}
+
+/* ================= DARK MODE FIX ================= */
+:global([data-theme='dark']) .answerCard:hover {
+  background-color: #ffffff !important;
+}
+
+:global([data-theme='dark']) .answerCard:hover .answerText,
+:global([data-theme='dark']) .answerCard:hover .user {
+  color: #000000 !important;
+}
+
+:global([data-theme='dark']) .pagination .pageBtn {
+  background: #1f1f1f;
+  color: #ccc;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+:global([data-theme='dark']) .pagination .pageBtn:hover:not(:disabled),
+:global([data-theme='dark']) .pagination .pageBtn.active {
+  background: linear-gradient(135deg, #3b50b6, #6c82f1);
+  color: #fff;
 }
